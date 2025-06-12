@@ -6,8 +6,8 @@ module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "spring-app-cluster"
   cluster_version = "1.27"
-  subnets         = ["subnet-123456", "subnet-789012"] # Replace with your subnets
-  vpc_id          = "vpc-123456" # Replace with your VPC ID
+  subnets         = ["subnet-070c47b4c3a8617e1", "subnet-06b98bd54235f7c56"] 
+  vpc_id          = "vpc-07d95f7f3f036f70b"
 
   worker_groups = [
     {

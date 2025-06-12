@@ -20,6 +20,7 @@ module "eks" {
     }
   }
 }
+
 resource "aws_iam_policy" "alb_ingress" {
   name        = "ALBIngressController"
   description = "Policy for ALB Ingress Controller"
@@ -28,7 +29,7 @@ resource "aws_iam_policy" "alb_ingress" {
 }
 
 resource "aws_iam_role_policy_attachment" "alb_ingress" {
-  role       = module.eks.worker_iam_role_name
+  role       = module.eks.eks_managed_node_groups["default"].iam_role_name
   policy_arn = aws_iam_policy.alb_ingress.arn
 }
 

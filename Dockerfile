@@ -7,5 +7,5 @@ RUN mvn -f /usr/src/app/pom.xml clean package
 # Package stage
 FROM openjdk:17-jdk-slim
 COPY --from=build /usr/src/app/target/*.jar /usr/app/application.jar
-EXPOSE 8080
+EXPOSE 8081
 ENTRYPOINT ["java","-jar","/usr/app/application.jar"]

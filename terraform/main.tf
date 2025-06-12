@@ -19,7 +19,7 @@ module "eks" {
       capacity_type  = "ON_DEMAND"
     }
   }
-
+}
 resource "aws_iam_policy" "alb_ingress" {
   name        = "ALBIngressController"
   description = "Policy for ALB Ingress Controller"
@@ -32,4 +32,3 @@ resource "aws_iam_role_policy_attachment" "alb_ingress" {
   policy_arn = aws_iam_policy.alb_ingress.arn
 }
 
-}

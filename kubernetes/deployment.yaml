@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: spring-app
-        image: joannedada/spring-app:15
+        image: joannedada/spring-app:16
         ports:
         - containerPort: 8081
         readinessProbe:

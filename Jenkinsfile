@@ -46,7 +46,7 @@ pipeline {
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
             sh """
-                aws eks update-kubeconfig --name your-cluster --region your-region
+                aws eks update-kubeconfig --name spring-app-cluster --region us-east-1
                 kubectl apply -f kubernetes/deployment.yaml
                 kubectl apply -f kubernetes/service.yaml
                 kubectl apply -f kubernetes/ingress.yaml

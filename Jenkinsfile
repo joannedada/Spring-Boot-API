@@ -38,15 +38,21 @@ pipeline {
     }
 }
         stage('Deploy to EKS') {
-            steps {
-                withKubeConfig([credentialsId: 'eks-credentials', serverUrl: '']) {
-                    sh """
-                        kubectl apply -f kubernetes/deployment.yaml
-                        kubectl apply -f kubernetes/service.yaml
-                        kubectl apply -f kubernetes/ingress.yaml
-                    """
-                }
-            }
+    steps {
+        withCredentials([[
+            $class: 'AmazonWebServicesCredentialsBinding',
+            credentialsId: 'eks-credentials',
+            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+        ]]) {
+            sh """
+                aws eks update-kubeconfig --name your-cluster --region your-region
+                kubectl apply -f kubernetes/deployment.yaml
+                kubectl apply -f kubernetes/service.yaml
+                kubectl apply -f kubernetes/ingress.yaml
+            """
         }
+    }
+}
     }
 }

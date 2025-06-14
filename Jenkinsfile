@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-repo/spring-app.git'
+                git branch: 'dev', url: 'https://github.com/joannedada/Spring-Boot-API.git'
             }
         }
         
@@ -38,15 +38,21 @@ pipeline {
     }
 }
         stage('Deploy to EKS') {
-            steps {
-                withKubeConfig([credentialsId: 'eks-credentials', serverUrl: '']) {
-                    sh """
-                        kubectl apply -f kubernetes/deployment.yaml
-                        kubectl apply -f kubernetes/service.yaml
-                        kubectl apply -f kubernetes/ingress.yaml
-                    """
-                }
-            }
+    steps {
+        withCredentials([[
+            $class: 'AmazonWebServicesCredentialsBinding',
+            credentialsId: 'eks-credentials',
+            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+        ]]) {
+            sh """
+                aws eks update-kubeconfig --name spring-app-cluster --region us-east-1
+                kubectl apply -f kubernetes/deployment.yaml
+                kubectl apply -f kubernetes/service.yaml
+                kubectl apply -f kubernetes/ingress.yaml
+            """
         }
+    }
+}
     }
 }

@@ -20,18 +20,18 @@ spec:
     spec:
       containers:
       - name: spring-app
-        image: joannedada/spring-app:latest
+        image: joannedada/spring-app:1
         ports:
-        - containerPort: 8080
+        - containerPort: 8081
         readinessProbe:
           httpGet:
             path: /actuator/health
-            port: 8080
+            port: 8081
           initialDelaySeconds: 10
           periodSeconds: 5
         livenessProbe:
           httpGet:
             path: /actuator/health
-            port: 8080
+            port: 8081
           initialDelaySeconds: 20
           periodSeconds: 10
